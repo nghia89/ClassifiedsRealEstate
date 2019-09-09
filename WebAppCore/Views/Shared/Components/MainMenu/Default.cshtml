@@ -1,0 +1,41 @@
+﻿@model TypeVM
+
+
+<ul class="navbar-nav">
+    <li class="nav-item">
+        <a class="nav-link active" href="\">Home</a>
+    </li>
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+            Tin tức
+        </a>
+        @foreach(var item in Model.typeViewModels.Where(c => c.ParentId == null))
+        {
+
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/@item.SeoAlias-c.@(item.Id).html">@item.Name</a>
+                @if(Model.typeViewModels.Any(x => x.ParentId == item.Id))
+                {
+                @*<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                    @foreach(var subItem in Model.typeViewModels.Where(x => x.ParentId == item.Id))
+                    {
+                        <a class="dropdown-item" href="/@item.SeoAlias-c.@(subItem.Id).html">@subItem.Name</a>
+                    }
+                </div>*@
+                }
+            </div>
+
+        }
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/contact.html">Liên hệ</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/page/introduction.html">Giới thiệu</a>
+    </li>
+
+</ul>
