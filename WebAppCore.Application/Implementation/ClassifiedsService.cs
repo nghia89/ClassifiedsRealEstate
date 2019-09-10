@@ -301,5 +301,18 @@ namespace WebAppCore.Application.Implementation
 
 			return paginationSet;
 		}
+
+		public async Task<PagedResult<ClassifiedsViewModel>> GetViewAll(string keyword,int page,int pageSize)
+		{
+			var (data, totalCount) = await _Classifieds.Paging(page,pageSize,x => x.Status == Status.Active,null);
+			var paginationSet = new PagedResult<ClassifiedsViewModel>() {
+				Results = data.Select(x => x.ToModel()).ToList(),
+				CurrentPage = page,
+				RowCount = (int)totalCount,
+				PageSize = pageSize,
+			};
+
+			return paginationSet;
+		}
 	}
 }

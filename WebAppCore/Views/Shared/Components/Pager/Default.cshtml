@@ -2,9 +2,9 @@
 @{
     var urlTemplate = Url.Action() + "?page={0}";
     var request = ViewContext.HttpContext.Request;
-    foreach (var key in request.Query.Keys)
+    foreach(var key in request.Query.Keys)
     {
-        if (key == "page")
+        if(key == "page")
         {
             continue;
         }
@@ -12,45 +12,70 @@
         urlTemplate += "&" + key + "=" + request.Query[key];
     }
 
-    var startIndex = Math.Max(Model.CurrentPage - 5, 1);
-    var finishIndex = Math.Min(Model.CurrentPage + 5, Model.PageCount);
+    var startIndex = Math.Max(Model.CurrentPage - 5,1);
+    var finishIndex = Math.Min(Model.CurrentPage + 5,Model.PageCount);
 }
-<div class="pagination-area">
-    <div class="col-md-4 col-sm-4 items-info">
-        Từ @Model.FirstRowOnPage đến @Model.LastRowOnPage của @Model.RowCount sản phẩm
-    </div>
-    <div class="col-md-8 col-sm-8">
-        @if (Model.PageCount > 1)
-        {
-            <ul>
-                @if (Model.CurrentPage == startIndex)
-                {
-                    <li><i class="fa fa-angle-left"></i></li>
-                }
-                else
-                {
-                    <li><a href="@urlTemplate.Replace("{0}", Model.PageCount.ToString())"><i class="fa fa-angle-left"></i></a></li>
-                }
-                @for (var i = startIndex; i <= finishIndex; i++)
-                {
-                    if (i == Model.CurrentPage)
-                    {
-                        <li><a class="active" ><span>@i</span></a></li>
-                    }
-                    else
-                    {
-                        <li><a href="@urlTemplate.Replace("{0}", i.ToString())">@i</a></li>
-                    }
-                }
-                @if (Model.CurrentPage == finishIndex)
-                {
-                    <li><i class="fa fa-angle-right"></i></li>
-                }
-                else
-                {
-                    <li><a href="@urlTemplate.Replace("{0}", Model.PageCount.ToString())"><i class="fa fa-angle-right"></i></a></li>
-                }
-            </ul>
-        }
+<div class="row">
+    <div class="col-sm-12">
+
+        <div class="col-md-4 col-sm-4">
+            Từ @Model.FirstRowOnPage đến @Model.LastRowOnPage của @Model.RowCount sản phẩm
+        </div>
+        <div class="col-md-8 col-sm-8">
+            @if(Model.PageCount > 1)
+            {<nav class="pagination-a">
+                    <ul class="pagination justify-content-end">
+                        @if(Model.CurrentPage == startIndex)
+                        {
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1">
+                                    <span class="ion-ios-arrow-back"></span>
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item ">
+                                <a class="page-link" href="@urlTemplate.Replace("{0}", Model.PageCount.ToString())" tabindex="-1">
+                                    <span class="ion-ios-arrow-back"></span>
+                                </a>
+                            </li>
+                        }
+                        @for(var i = startIndex; i <= finishIndex; i++)
+                        {
+                            if(i == Model.CurrentPage)
+                            {
+                                <li class="page-item active">
+                                    <a class="page-link">@i</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="page-item ">
+                                    <a href="@urlTemplate.Replace("{0}", i.ToString())" class="page-link">@i</a>
+                                </li>
+                            }
+                        }
+                        @if(Model.CurrentPage == finishIndex)
+                        {
+                            <li class="page-item next">
+                                <a class="page-link" href="#">
+                                    <span class="ion-ios-arrow-forward"></span>
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item next">
+                                <a class="page-link" href="@urlTemplate.Replace("{0}", Model.PageCount.ToString())">
+                                    <span class="ion-ios-arrow-forward"></span>
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+                </nav>
+            }
+        </div>
     </div>
 </div>

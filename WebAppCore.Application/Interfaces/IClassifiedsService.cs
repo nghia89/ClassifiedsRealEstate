@@ -51,5 +51,7 @@ namespace WebAppCore.Application.Interfaces
 		List<ClassifiedsViewModel> GetListByTag(string tagId,int page,int pagesize,out int totalRow);
 
 		List<TagViewModel> GetListTag(string searchText);
+
+		Task<PagedResult<ClassifiedsViewModel>> GetViewAll(string keyword,int page,int pageSize);
 	}
 }

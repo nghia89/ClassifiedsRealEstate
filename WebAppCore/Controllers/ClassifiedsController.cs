@@ -39,7 +39,26 @@ namespace WebAppCore.Controllers
 			return View(classified);
 		}
 
-		[Route("{SeoAlias}.{id}.html",Name = "Blog")]
+		[Route("tin-moi.html",Name = "viewAll")]
+		public async Task<IActionResult> ViewAll(string keywork,int? pageSize=2,int page = 1)
+		{
+			var classified = new ClassifiedsVM();
+			if(pageSize == null)
+				pageSize = _configuration.GetValue<int>("PageSize");
+			classified.PageSize = pageSize;
+			var data = await _classifiedsService.GetViewAll(keywork,page,pageSize.Value);
+			var listData = data.Results.Select(a => ClassifiedsViewModel.form(a)).ToList();
+			var paginationSet = new PagedResult<ClassifiedsViewModel>() {
+				Results = listData,
+				CurrentPage = page,
+				RowCount = data.RowCount,
+				PageSize = data.PageSize,
+			};
+			classified.Data = paginationSet;
+			return View(classified);
+		}
+
+		[Route("{SeoAlias}-p.{id}.html",Name = "detail")]
 		public async Task<IActionResult> Detail(int id)
 		{
 			var dataVM = new ClassifiedsDetailVM();
