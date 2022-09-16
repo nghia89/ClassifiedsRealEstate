@@ -11,6 +11,6 @@
     "gulp-cssmin": "0.1.7",
     "gulp-uglify": "2.0.1",
     "rimraf": "2.6.1",
-    "bootstrap": "4.0.0"
+    "bootstrap": "4.3.1"
   }
 }
